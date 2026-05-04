@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,8 @@
         :root {
             --minion-yellow: #FFE11B;
             --minion-blue: #2D7DBB;
-            --glow-yellow: rgba(255, 225, 27, 0.7);
-            --glow-blue: rgba(45, 125, 187, 0.7);
+            --glow-yellow: rgba(255, 225, 27, 0.8);
+            --glow-blue: rgba(45, 125, 187, 0.8);
         }
 
         body {
@@ -17,7 +18,7 @@
             padding: 0;
             background-color: #050505;
             color: #fff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -35,70 +36,81 @@
             z-index: -1;
         }
 
-        /* Estilo do Minion */
+        /* Minion Flutuante */
         .minion-img {
-            width: 180px;
+            width: 140px;
             margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px var(--glow-yellow));
-            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px var(--glow-yellow));
+            animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
         }
 
-        /* Botão estilizado */
+        /* Botão Estilizado */
         #reveal-btn {
-            background: linear-gradient(135deg, var(--minion-yellow), #f39c12);
-            border: none;
-            padding: 20px 40px;
-            font-size: 1.4rem;
+            background: var(--minion-yellow);
+            border: 5px solid var(--minion-blue);
+            padding: 20px 45px;
+            font-size: 1.6rem;
             font-weight: 900;
             color: #333;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border-radius: 15px;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 0 #c7a600, 0 15px 25px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 10;
+            box-shadow: 0 0 25px var(--glow-yellow);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         #reveal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 0 #c7a600, 0 20px 30px var(--glow-yellow);
-        }
-
-        #reveal-btn:active {
-            transform: translateY(8px);
-            box-shadow: 0 2px 0 #c7a600;
+            transform: scale(1.1) rotate(-3deg);
+            background: #fff;
         }
 
         /* Estilo da Carta */
         .card {
-            background: #fff;
-            background-image: radial-gradient(#e5e5f7 0.5px, transparent 0.5px), radial-gradient(#e5e5f7 0.5px, #ffffff 0.5px);
-            background-size: 20px 20px;
-            color: #222;
-            padding: 40px;
+            background: #ffffff;
+            background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
+            background-size: 15px 15px;
+            color: #1a1a1a;
+            padding: 45px;
             max-width: 550px;
             width: 85%;
-            border-radius: 2px; /* Papel mais reto */
-            box-shadow: 0 0 50px rgba(255,255,255,0.1), 20px 20px 0px var(--minion-blue);
+            border-radius: 10px;
+            box-shadow: 0 0 40px var(--glow-blue);
             position: relative;
             display: none;
-            border-left: 10px solid var(--minion-yellow);
+            border-bottom: 12px solid var(--minion-blue);
+            animation: popIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         h1 {
             color: var(--minion-blue);
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-top: 0;
-            border-bottom: 2px dashed #ccc;
-            padding-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .content {
@@ -107,10 +119,10 @@
             text-align: left;
         }
 
-        .minion-text {
-            font-weight: bold;
+        .highlight {
             color: #e67e22;
-            text-decoration: underline wavy var(--minion-yellow);
+            font-weight: bold;
+            font-style: italic;
         }
 
         .signature {
@@ -123,43 +135,44 @@
 
         .heart {
             color: #ff4d4d;
-            animation: beat 0.8s infinite alternate;
             display: inline-block;
+            animation: beat 0.7s infinite alternate;
         }
 
-        @keyframes beat { to { transform: scale(1.3); } }
-
+        @keyframes beat {
+            to {
+                transform: scale(1.3);
+            }
+        }
     </style>
 </head>
+
 <body>
 
     <canvas id="particles"></canvas>
 
-    <!-- Imagem de um Minion segurando coração -->
-    <img src="./minion.png" alt="Minion Love" class="minion-img" id="minion-icon">
+    <img src="./minion.png" alt="Minion"
+        class="minion-img" id="minion-icon">
 
-    <button id="reveal-btn">Bello? Open! 🍌</button>
+    <button id="reveal-btn">Bello? OPEN! 🍌</button>
 
     <div class="card" id="letter">
-        <h1>Bello, Papoy! 🍌</h1>
-        <div class="content">
-            <p>Tulaliloo, ti amo! Muak, muak, muak para tu!</p>
-            
-            <p>Look at tu, so pweety, so smarty! Me heart go <span class="minion-text">bi-do, bi-do</span> quando tu walky-walky com de fancy shoes.</p>
-            
-            <p>Me want to give tu a bigga hugga e muchaaaas flowers <span class="heart">❤</span> (non-stinky ones, promise!).</p>
-            
-            <p>Tu es de most beautifa-na Minion em de whole world. Tank yu por ser de bestest partner forever. Tu es me favorite!</p>
-
-            <p style="text-align: center; margin-top: 20px;"><i>Underwear... tulaliloo ti amo!</i></p>
-        </div>
+        Oh! Bello, papaguena! Tu le bella comme le papaya. Tulaliloo, ti amo! Muak, muak, muak para tu!
+        <br><br>
+        Look at tu, so pweety, so smarty! Me heart go <b>bi-do, bi-do</b> quando tu walky-walky com de fancy shoes.
+        Me want to give tu a bigga hugga e muchaaaas flowers <span class="heart">❤</span> (non-stinky ones, promise!).
+        <br><br>
+        Tu es de most beautifa-na Minion em de whole world. Tank yu por ser de bestest partner forever. Tu es me
+        favorite!
+        <br><br>
+        <i>Underwear... tulaliloo ti amo!</i>
         <div class="signature">
             Tu Minion ✨
         </div>
     </div>
 
     <script>
-        // Partículas
+        // Fundo Animado
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -177,6 +190,8 @@
             }
             draw() {
                 ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -184,35 +199,36 @@
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
             }
         }
 
         function init() {
-            for (let i = 0; i < 80; i++) particlesArray.push(new Particle());
+            for (let i = 0; i < 70; i++) particlesArray.push(new Particle());
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particlesArray.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particlesArray.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
 
-        // Lógica
         const btn = document.getElementById('reveal-btn');
         const letter = document.getElementById('letter');
-        const minionIcon = document.getElementById('minion-icon');
 
         btn.addEventListener('click', () => {
             btn.style.display = 'none';
-            minionIcon.style.width = '100px'; // Diminui um pouco para dar foco à carta
             letter.style.display = 'block';
         });
 
-        init();
-        animate();
+        init(); animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
 </body>
+
 </html>
